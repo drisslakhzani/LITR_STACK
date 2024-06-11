@@ -4,7 +4,13 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use \App\Models\Job;
 
+Route::get('/job', fn () => view('welcome' ,['jobs' => Job::all()] ))->name('welcome');
+
+Route::get('/job/{id}', fn ($id) =>  view('job' ,
+    ['job' => Job::find($id)]))->name('job');
+Route::get('/employer', [\App\Http\Controllers\EmployerController::class, 'index'])->name('employers');
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
